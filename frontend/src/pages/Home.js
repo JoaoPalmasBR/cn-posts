@@ -4,11 +4,17 @@ import axios from 'axios';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/posts/`)
+    axios.get(`${apiUrl}/posts/`)
       .then(response => setPosts(response.data))
       .catch(error => console.error(error));
+
+    fetch(`${apiUrl}/endpoint`)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Erro ao acessar a API:", error));
   }, []);
 
   return (
